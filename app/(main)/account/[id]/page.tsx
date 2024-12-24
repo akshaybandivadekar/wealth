@@ -1,6 +1,10 @@
 import { notFound } from 'next/navigation';
 
 import { getAccountWithTransactions } from '@/actions/accounts';
+import TransactionTable from '../_components/transaction-table';
+import { Suspense } from 'react';
+import { BarLoader } from 'react-spinners';
+import { blueishPurpleColor } from '@/constants/color';
 
 const AccountsPage = async ({ params }) => {
   const { id } = await params;
@@ -32,6 +36,16 @@ const AccountsPage = async ({ params }) => {
       {/* Chart Section */}
 
       {/* Transaction Table */}
+      <Suspense
+        fallback={
+          <BarLoader
+            className='mt-4'
+            width={'100%'}
+            color={blueishPurpleColor}
+          />
+        }>
+        <TransactionTable transactions={transctions} />
+      </Suspense>
     </div>
   );
 };
