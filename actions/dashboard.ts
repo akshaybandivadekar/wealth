@@ -4,20 +4,7 @@ import { auth } from '@clerk/nextjs/server';
 import { revalidatePath } from 'next/cache';
 
 import { db } from '@/lib/prisma';
-
-const serializeTransaction = (obj) => {
-  const serialize = { ...obj };
-
-  if (obj.balance) {
-    serialize.balance = obj.balance.toNumber();
-  }
-
-  if (obj.amount) {
-    serialize.amount = obj.amount.toNumber();
-  }
-
-  return serialize;
-};
+import serializeTransaction from './utils/serializeTransaction';
 
 export async function createAccount(data) {
   try {
